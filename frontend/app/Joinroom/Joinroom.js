@@ -3,27 +3,32 @@
 import React, { useEffect, useState, useMemo } from "react";
 import socket from "../connect/connection";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter,useSearchParams } from "next/navigation";
 
 function Joinroom() {
   const [roomName, setRoomName] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams()
+  const userName = searchParams.get("user")
 
   // const joinRoomHandler = (e) => {
   //   e.preventDefault();
   //   socket.emit('join-room', roomName)
   //   setRoomName("");
   // }
-  // function createRoom() {
-  //   const room = nanoid()
-  //   setRoomName(room)
-  //   socket.emit("create room",  room )
+ 
+
+  
+  // function joinRoom() {
+  //   console.log(`User ${userName}, Room ${roomName} joined`);
+  //   socket.emit("join-room", {userName,roomName});
+  //   router.push(`/Chatroom?room=${roomName}&user=${userName}`);
   // }
 
   function joinRoom() {
-    console.log(`Room ${roomName} joined`);
+    console.log(` Room ${roomName} joined`);
     socket.emit("join-room", roomName);
-    router.push(`/Chatroom?room=${roomName}`);
+    router.push(`/Chatroom?user=${userName}&room=${roomName}`);
   }
 
   return (
