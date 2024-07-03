@@ -2,7 +2,7 @@ import express from 'express'
 import { Server } from 'socket.io';
 import {createServer} from "http";
 import cors from 'cors'
-
+let users = {}
 const port=3000;
 const app = express();
 const server = createServer(app); 
@@ -25,13 +25,27 @@ app.get("/",(req,res)=>{
 io.on("connection",(socket)=> {
     console.log("user connected", socket.id)
 
-    socket.on("message",({room,message})=>{
-        console.log({room,message});
+    socket.on("username", (m) => {
+        if (!nameTaken(m.userName)) {
+          console.log(socket.id, "assigend to",m)
+          users[socket.id] = m
+          console.log("Users", users)
+          socket.emit("approved username")
+        }
+        else {
+              console.log("Username Taken")
+              console.log(socket.id, "already has", m)
+              socket.emit("duplicate username", m)
+        }
+      })
+
+    socket.on("message",({room,message,userName})=>{
+         console.log({room,message,userName});
        if(room){
-        io.to(room).emit("recive-message",message);
+         io.to(room).emit("recive-message",{message,userName});
        }
        else{
-        socket.broadcast.emit("recive-message",message);
+            io.emit("recive-message",message);
        }
     })
     socket.on("join-room",(room)=>{
@@ -44,6 +58,15 @@ io.on("connection",(socket)=> {
     })
 })
 
+
+function nameTaken(userName) {
+    for (const socketid in users) {
+      if (users[socketid].userName === userName) {
+        return true
+      }
+    }
+    return false
+  }
 server.listen(port,()=>{
     console.log(`server is working at ${port}`);
 });     

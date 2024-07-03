@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type=text] {
+input[type="text"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -13,10 +13,21 @@ input[type=text] {
 button[type="submit"] {
   padding: 10px 20px;
   background-color: black;
- 
+
   color: white;
   border: none;
-  
+
   cursor: pointer;
   font-size: 16px;
+}
+
+.word {
+  word-wrap: break-word;
+}
+
+.chatbox h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: black;
 }
