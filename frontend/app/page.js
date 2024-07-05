@@ -25,8 +25,10 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col justify-center h-screen mx-auto w-max">
+     <div className="bg-gradient-to-b from-green-200 to-green-600 h-[100vh]">
+      <div className="flex flex-col justify-center h-screen mx-auto w-max ">
         <div className="flex flex-col items-center justify-center gap-3 ">
+        <h5 className="text-3xl"> Enter User Name</h5>
           <input
             className="p-2 m-2 text-black bg-white rounded-lg w-1/8 shadow-m"
             type="text"
@@ -34,14 +36,12 @@ export default function Page() {
             placeholder="Enter your User name..."
             value={userName}
             onChange={(e) => {
-              setUserName(e.target.value);
+              setUserName(e.target.value); 
             }}
           />
-
           {!takenName ? "" : <span>{takenName}</span>}
-
           <button
-            className="w-40 p-3 m-2 font-semibold text-white bg-black rounded-lg shadow-md hover:bg-blue-700"
+            className="w-40 p-3 m-2 font-semibold text-white bg-black rounded-lg shadow-md hover:bg-gray-700"
             onClick={() => goto()}
           >
             Enter
@@ -51,6 +51,7 @@ export default function Page() {
 
           {/* <Chatroom/> */}
         </div>
+      </div>
       </div>
     </>
   );
